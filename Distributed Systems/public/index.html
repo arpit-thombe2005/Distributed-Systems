@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed EHR System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏥 Distributed Electronic Health Record System</h1>
+            <p>Secure, Real-time Healthcare Data Management</p>
+        </header>
+
+        <main class="main-content">
+            <div class="welcome-section">
+                <h2>Welcome to the Distributed EHR System</h2>
+                <p>This system demonstrates distributed algorithms including time synchronization, mutual exclusion, election algorithms, and data replication in a healthcare environment.</p>
+            </div>
+
+            <div class="access-panels">
+                <div class="panel admin-panel">
+                    <div class="panel-header">
+                        <h3>🔧 Admin Panel</h3>
+                        <p>System monitoring and management</p>
+                    </div>
+                    <div class="panel-content">
+                        <ul>
+                            <li>Real-time server logs</li>
+                            <li>Node status monitoring</li>
+                            <li>Clock synchronization status</li>
+                            <li>Election algorithm controls</li>
+                            <li>System performance metrics</li>
+                        </ul>
+                        <a href="/admin" class="btn btn-primary">Access Admin Panel</a>
+                    </div>
+                </div>
+
+                <div class="panel doctor-panel">
+                    <div class="panel-header">
+                        <h3>👨‍⚕️ Doctor Portal</h3>
+                        <p>Patient record management</p>
+                    </div>
+                    <div class="panel-content">
+                        <ul>
+                            <li>View assigned patients</li>
+                            <li>Update patient records</li>
+                            <li>Real-time notifications</li>
+                            <li>Consistency monitoring</li>
+                            <li>Secure authentication</li>
+                        </ul>
+                        <a href="/doctor" class="btn btn-secondary">Access Doctor Portal</a>
+                    </div>
+                </div>
+
+                <div class="panel patient-panel">
+                    <div class="panel-header">
+                        <h3>👤 Patient Portal</h3>
+                        <p>Personal health records</p>
+                    </div>
+                    <div class="panel-content">
+                        <ul>
+                            <li>View personal records</li>
+                            <li>Real-time updates</li>
+                            <li>Doctor notifications</li>
+                            <li>Health history tracking</li>
+                            <li>Secure access</li>
+                        </ul>
+                        <a href="/patient" class="btn btn-tertiary">Access Patient Portal</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="system-info">
+                <h3>System Features</h3>
+                <div class="features-grid">
+                    <div class="feature">
+                        <h4>🕐 Berkeley Time Synchronization</h4>
+                        <p>Ensures all nodes maintain synchronized logical clocks for consistent timestamps across the distributed system.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🔒 Distributed Mutual Exclusion</h4>
+                        <p>Prevents race conditions when multiple nodes attempt to update the same patient record simultaneously.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>👑 Election Algorithm</h4>
+                        <p>Automatically selects a coordinator node to manage system-wide operations and maintain consistency.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>📋 Data Replication</h4>
+                        <p>Maintains multiple copies of patient data across nodes for fault tolerance and improved availability.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>📊 Real-time Monitoring</h4>
+                        <p>Live system logs, node status, and performance metrics for administrators.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🔐 Secure Authentication</h4>
+                        <p>Role-based access control ensuring only authorized users can access sensitive health data.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-instructions">
+                <h3>Demo Instructions</h3>
+                <div class="instructions">
+                    <div class="instruction-step">
+                        <h4>1. Start Multiple Nodes</h4>
+                        <p>Run multiple instances of the server on different ports to simulate a distributed system:</p>
+                        <code>node server.js --port=3000 --node-id=node-1</code><br>
+                        <code>node server.js --port=3001 --node-id=node-2</code><br>
+                        <code>node server.js --port=3002 --node-id=node-3</code>
+                    </div>
+                    <div class="instruction-step">
+                        <h4>2. Access Admin Panel</h4>
+                        <p>Monitor real-time logs, node status, and trigger distributed algorithms.</p>
+                    </div>
+                    <div class="instruction-step">
+                        <h4>3. Test Doctor Portal</h4>
+                        <p>Login as a doctor (ID: 1, Password: doctor1) and update patient records.</p>
+                    </div>
+                    <div class="instruction-step">
+                        <h4>4. Test Patient Portal</h4>
+                        <p>Login as a patient (ID: 1-8) to view personal health records and receive real-time updates.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Distributed EHR System. Built with Node.js, Express, and Socket.IO.</p>
+        </footer>
+    </div>
+
+    <script src="socket.io/socket.io.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

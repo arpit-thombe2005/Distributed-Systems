@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Distributed EHR System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🔧 Admin Panel</h1>
+            <nav class="nav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/admin" class="nav-link active">Admin</a>
+                <a href="/doctor" class="nav-link">Doctor</a>
+                <a href="/patient" class="nav-link">Patient</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="admin-dashboard">
+                <div class="dashboard-header">
+                    <h2>System Monitoring Dashboard</h2>
+                    <div class="system-status">
+                        <span class="status-indicator" id="systemStatus">🟢 Online</span>
+                        <span class="node-info" id="nodeInfo">Node: Loading...</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- System Overview -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>📊 System Overview</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric">
+                                <span class="metric-label">Active Nodes:</span>
+                                <span class="metric-value" id="activeNodes">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Coordinator:</span>
+                                <span class="metric-value" id="coordinator">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Uptime:</span>
+                                <span class="metric-value" id="uptime">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Total Patients:</span>
+                                <span class="metric-value" id="totalPatients">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Time Synchronization -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>🕐 Time Synchronization</h3>
+                            <button class="btn btn-small" onclick="triggerTimeSync()">Sync Now</button>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric">
+                                <span class="metric-label">Logical Clock:</span>
+                                <span class="metric-value" id="logicalClock">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Offset:</span>
+                                <span class="metric-value" id="timeOffset">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Sync Status:</span>
+                                <span class="metric-value" id="syncStatus">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Last Sync:</span>
+                                <span class="metric-value" id="lastSync">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Election Algorithm -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>👑 Election Algorithm</h3>
+                            <button class="btn btn-small" onclick="triggerElection()">Start Election</button>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric">
+                                <span class="metric-label">Current Coordinator:</span>
+                                <span class="metric-value" id="currentCoordinator">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Election Status:</span>
+                                <span class="metric-value" id="electionStatus">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Known Nodes:</span>
+                                <span class="metric-value" id="knownNodes">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Is Coordinator:</span>
+                                <span class="metric-value" id="isCoordinator">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mutual Exclusion -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>🔒 Mutual Exclusion</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric">
+                                <span class="metric-label">Active Locks:</span>
+                                <span class="metric-value" id="activeLocks">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Queued Requests:</span>
+                                <span class="metric-value" id="queuedRequests">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Lock Status:</span>
+                                <span class="metric-value" id="lockStatus">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Replication -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>📋 Data Replication</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric">
+                                <span class="metric-label">Replicas:</span>
+                                <span class="metric-value" id="replicaCount">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Pending Updates:</span>
+                                <span class="metric-value" id="pendingUpdates">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Consistency Level:</span>
+                                <span class="metric-value" id="consistencyLevel">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Node Status -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>🖥️ Node Status</h3>
+                        </div>
+                        <div class="card-content">
+                            <div id="nodeStatusList" class="node-list">
+                                <!-- Node status items will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real-time Logs -->
+                <div class="dashboard-card full-width">
+                    <div class="card-header">
+                        <h3>📝 Real-time System Logs</h3>
+                        <div class="log-controls">
+                            <button class="btn btn-small" onclick="clearLogs()">Clear Logs</button>
+                            <button class="btn btn-small" onclick="toggleAutoScroll()">Auto Scroll</button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="log-container">
+                            <div id="logDisplay" class="log-display">
+                                <!-- Logs will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="socket.io/socket.io.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

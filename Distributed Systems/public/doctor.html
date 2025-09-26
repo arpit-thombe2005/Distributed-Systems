@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Portal - Distributed EHR System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>👨‍⚕️ Doctor Portal</h1>
+            <nav class="nav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/admin" class="nav-link">Admin</a>
+                <a href="/doctor" class="nav-link active">Doctor</a>
+                <a href="/patient" class="nav-link">Patient</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <!-- Login Form -->
+            <div id="loginForm" class="login-form">
+                <div class="form-container">
+                    <h2>Doctor Login</h2>
+                    <form onsubmit="loginDoctor(event)">
+                        <div class="form-group">
+                            <label for="doctorId">Doctor ID:</label>
+                            <select id="doctorId" required>
+                                <option value="">Select Doctor</option>
+                                <option value="1">Dr. Sarah Johnson (Cardiology)</option>
+                                <option value="2">Dr. Michael Chen (Neurology)</option>
+                                <option value="3">Dr. Emily Rodriguez (Pediatrics)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" placeholder="Enter password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                    <div class="login-hint">
+                        <p><strong>Demo Credentials:</strong></p>
+                        <p>Doctor 1: doctor1</p>
+                        <p>Doctor 2: doctor2</p>
+                        <p>Doctor 3: doctor3</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Dashboard -->
+            <div id="doctorDashboard" class="doctor-dashboard" style="display: none;">
+                <div class="dashboard-header">
+                    <h2>Welcome, <span id="doctorName">Dr. Name</span></h2>
+                    <div class="doctor-info">
+                        <span class="specialization" id="doctorSpecialization">Specialization</span>
+                        <button class="btn btn-small" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Patient List -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>👥 Assigned Patients</h3>
+                            <span class="patient-count" id="patientCount">0 patients</span>
+                        </div>
+                        <div class="card-content">
+                            <div id="patientList" class="patient-list">
+                                <!-- Patient list will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Patient Details -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>📋 Patient Details</h3>
+                            <span class="patient-id" id="selectedPatientId">Select a patient</span>
+                        </div>
+                        <div class="card-content">
+                            <div id="patientDetails" class="patient-details">
+                                <p class="no-selection">Select a patient from the list to view details</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Update Form -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>✏️ Update Patient Record</h3>
+                        </div>
+                        <div class="card-content">
+                            <form id="updateForm" onsubmit="updatePatient(event)">
+                                <div class="form-group">
+                                    <label for="updateDisease">Disease/Condition:</label>
+                                    <input type="text" id="updateDisease" placeholder="Enter disease or condition">
+                                </div>
+                                <div class="form-group">
+                                    <label for="updateMedicines">Medicines:</label>
+                                    <input type="text" id="updateMedicines" placeholder="Enter medicines">
+                                </div>
+                                <div class="form-group">
+                                    <label for="updateNotes">Notes:</label>
+                                    <textarea id="updateNotes" placeholder="Enter clinical notes"></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="updateBloodPressure">Blood Pressure:</label>
+                                        <input type="text" id="updateBloodPressure" placeholder="e.g., 120/80">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="updateHeartRate">Heart Rate:</label>
+                                        <input type="number" id="updateHeartRate" placeholder="e.g., 72">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="updateTemperature">Temperature:</label>
+                                        <input type="number" id="updateTemperature" step="0.1" placeholder="e.g., 98.6">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="updateWeight">Weight (kg):</label>
+                                        <input type="number" id="updateWeight" step="0.1" placeholder="e.g., 70">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" disabled id="updateButton">Update Record</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- System Status -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>🔧 System Status</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="status-item">
+                                <span class="status-label">Node Status:</span>
+                                <span class="status-value" id="nodeStatus">🟢 Online</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Data Consistency:</span>
+                                <span class="status-value" id="dataConsistency">✅ Consistent</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Last Update:</span>
+                                <span class="status-value" id="lastUpdate">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Real-time Notifications -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>🔔 Notifications</h3>
+                            <button class="btn btn-small" onclick="clearNotifications()">Clear</button>
+                        </div>
+                        <div class="card-content">
+                            <div id="notifications" class="notifications">
+                                <!-- Notifications will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="socket.io/socket.io.js"></script>
+    <script src="js/doctor.js"></script>
+</body>
+</html>

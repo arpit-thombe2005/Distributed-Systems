@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Portal - Distributed EHR System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>👤 Patient Portal</h1>
+            <nav class="nav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/admin" class="nav-link">Admin</a>
+                <a href="/doctor" class="nav-link">Doctor</a>
+                <a href="/patient" class="nav-link active">Patient</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <!-- Login Form -->
+            <div id="loginForm" class="login-form">
+                <div class="form-container">
+                    <h2>Patient Login</h2>
+                    <form onsubmit="loginPatient(event)">
+                        <div class="form-group">
+                            <label for="patientId">Patient ID:</label>
+                            <select id="patientId" required>
+                                <option value="">Select Patient</option>
+                                <option value="1">Alice Johnson (ID: 1)</option>
+                                <option value="2">Bob Smith (ID: 2)</option>
+                                <option value="3">Carol Davis (ID: 3)</option>
+                                <option value="4">David Wilson (ID: 4)</option>
+                                <option value="5">Eva Martinez (ID: 5)</option>
+                                <option value="6">Frank Thompson (ID: 6)</option>
+                                <option value="7">Grace Lee (ID: 7)</option>
+                                <option value="8">Henry Brown (ID: 8)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                    <div class="login-hint">
+                        <p><strong>Demo:</strong> Select any patient from the dropdown to access their records</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient Dashboard -->
+            <div id="patientDashboard" class="patient-dashboard" style="display: none;">
+                <div class="dashboard-header">
+                    <h2>Welcome, <span id="patientName">Patient Name</span></h2>
+                    <div class="patient-info">
+                        <span class="patient-id" id="patientIdDisplay">ID: -</span>
+                        <button class="btn btn-small" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Personal Information -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>👤 Personal Information</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Name:</span>
+                                    <span class="info-value" id="infoName">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Age:</span>
+                                    <span class="info-value" id="infoAge">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Gender:</span>
+                                    <span class="info-value" id="infoGender">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Blood Type:</span>
+                                    <span class="info-value" id="infoBloodType">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Doctor:</span>
+                                    <span class="info-value" id="infoDoctor">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Last Visit:</span>
+                                    <span class="info-value" id="infoLastVisit">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Medical Information -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>🏥 Medical Information</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="medical-info">
+                                <div class="medical-item">
+                                    <span class="medical-label">Current Condition:</span>
+                                    <span class="medical-value" id="medicalCondition">-</span>
+                                </div>
+                                <div class="medical-item">
+                                    <span class="medical-label">Medications:</span>
+                                    <span class="medical-value" id="medicalMedications">-</span>
+                                </div>
+                                <div class="medical-item">
+                                    <span class="medical-label">Allergies:</span>
+                                    <span class="medical-value" id="medicalAllergies">-</span>
+                                </div>
+                                <div class="medical-item">
+                                    <span class="medical-label">Notes:</span>
+                                    <span class="medical-value" id="medicalNotes">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vital Signs -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>💓 Vital Signs</h3>
+                            <span class="last-updated" id="vitalsLastUpdated">Last updated: -</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="vitals-grid">
+                                <div class="vital-item">
+                                    <div class="vital-icon">🩸</div>
+                                    <div class="vital-info">
+                                        <span class="vital-label">Blood Pressure</span>
+                                        <span class="vital-value" id="vitalBloodPressure">-</span>
+                                    </div>
+                                </div>
+                                <div class="vital-item">
+                                    <div class="vital-icon">💗</div>
+                                    <div class="vital-info">
+                                        <span class="vital-label">Heart Rate</span>
+                                        <span class="vital-value" id="vitalHeartRate">- bpm</span>
+                                    </div>
+                                </div>
+                                <div class="vital-item">
+                                    <div class="vital-icon">🌡️</div>
+                                    <div class="vital-info">
+                                        <span class="vital-label">Temperature</span>
+                                        <span class="vital-value" id="vitalTemperature">- °F</span>
+                                    </div>
+                                </div>
+                                <div class="vital-item">
+                                    <div class="vital-icon">⚖️</div>
+                                    <div class="vital-info">
+                                        <span class="vital-label">Weight</span>
+                                        <span class="vital-value" id="vitalWeight">- kg</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Update Personal Info -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>✏️ Update Personal Information</h3>
+                        </div>
+                        <div class="card-content">
+                            <form id="updateForm" onsubmit="updatePersonalInfo(event)">
+                                <div class="form-group">
+                                    <label for="updateName">Name:</label>
+                                    <input type="text" id="updateName" placeholder="Enter your name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="updateAge">Age:</label>
+                                    <input type="number" id="updateAge" placeholder="Enter your age">
+                                </div>
+                                <div class="form-group">
+                                    <label for="updateGender">Gender:</label>
+                                    <select id="updateGender">
+                                        <option value="">Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Information</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- System Status -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>🔧 System Status</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="status-item">
+                                <span class="status-label">Data Status:</span>
+                                <span class="status-value" id="dataStatus">✅ Up to date</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Last Sync:</span>
+                                <span class="status-value" id="lastSync">-</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Node Status:</span>
+                                <span class="status-value" id="nodeStatus">🟢 Online</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Real-time Updates -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>🔔 Real-time Updates</h3>
+                            <button class="btn btn-small" onclick="clearUpdates()">Clear</button>
+                        </div>
+                        <div class="card-content">
+                            <div id="realTimeUpdates" class="updates-list">
+                                <!-- Real-time updates will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="socket.io/socket.io.js"></script>
+    <script src="js/patient.js"></script>
+</body>
+</html>
